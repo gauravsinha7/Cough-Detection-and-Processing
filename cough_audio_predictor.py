@@ -27,27 +27,36 @@ other = True
 selected_file = str(sys.argv[1])
 selected_context = 'everything'
 
+
+
+
 print("Using deep learning model: %s" % (trained_model))
-model = load_model(trained_model)
-context = context_mapping[selected_context]
-graph = tf.get_default_graph()
 
-labels = dict()
-for k in range(len(context)):
-    labels[k] = context[k]
+def audio_predict (selected_files):
+    model = load_model(trained_model)
+    context = context_mapping[selected_context]
+    graph = tf.get_default_graph()
 
-###########################
-# Read Wavfile and Make Predictions
-###########################
-x = wavfile_to_examples(selected_file)
-with graph.as_default():
+    labels = dict()
+    for k in range(len(context)):
+        labels[k] = context[k]
 
-    x = x.reshape(len(x), 96, 64, 1)
-    predictions = model.predict(x)
+    ###########################
+    # Read Wavfile and Make Predictions
+    ###########################
+    x = wavfile_to_examples(selected_file)
+    with graph.as_default():
 
-    for k in range(len(predictions)):
-        prediction = predictions[k]
-        m = np.argmax(prediction)
-        ## compare the label and use it
-        if(label.to_human_labels[labels[m]]=="Coughing"):
-            print("Prediction: %s (%0.2f)" % ("Cough Detected", prediction[m]))
+        x = x.reshape(len(x), 96, 64, 1)
+        predictions = model.predict(x)
+
+        for k in range(len(predictions)):
+            prediction = predictions[k]
+            m = np.argmax(prediction)
+            ## compare the label and use it
+            if(label.to_human_labels[labels[m]]=="Coughing"):
+                return ("Prediction: %s (%0.2f)" % ("Cough Detected", prediction[m]))
+            else:
+                return "No Cough Sample in Audio"
+
+print(audio_predict(selected_file))
