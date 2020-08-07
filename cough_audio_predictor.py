@@ -10,11 +10,11 @@ from pathlib import Path
 import label
 import wget
 
-MODEL_PATH = "models/example_model.hdf5"
+MODEL_PATH = "models/audio_detection.hdf5"
 print("=====")
 print("Checking model... ")
 print("=====")
-model_filename = "models/example_model.hdf5"
+model_filename = "models/audio_detection.hdf5"
 label_model = Path(model_filename)
 
 ###########################
