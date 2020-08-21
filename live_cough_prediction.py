@@ -16,6 +16,7 @@ CHUNK = RATE
 MICROPHONES_DESCRIPTION = []
 FPS = 60.0
 
+
 ###########################
 # Check Microphone
 ###########################
